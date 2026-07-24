@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Cómo funciona la cuenta con Game Pass? | QuickPlay</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #090912;
+      --card-bg: rgba(19, 19, 32, 0.85);
+      --purple-accent: #8a2be2;
+      --pink-neon: #f72585;
+      --gradient-btn: linear-gradient(90deg, #9d4edd 0%, #f72585 100%);
+      --text-white: #ffffff;
+      --text-muted: #9a9ab6;
+      --border-color: rgba(157, 78, 221, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height: 100vh;
+      padding: 30px 20px;
+      background-image: radial-gradient(circle at 50% 10%, rgba(138, 43, 226, 0.15) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      transition: color 0.3s;
+    }
+    .btn-back:hover { color: #fff; }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    h1 span {
+      background: var(--gradient-btn);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 35px;
+      line-height: 1.5;
+    }
+
+    /* CARRUSEL DE IMÁGENES / GUÍA */
+    .carousel-container {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .carousel-slide {
+      display: none;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .carousel-slide.active {
+      display: block;
+    }
+
+    .carousel-img {
+      width: auto;
+      max-width: 80%;       
+      max-height: 280px;    
+      object-fit: contain;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      margin-top: 20px;     
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: var(--gradient-btn);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .slide-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .slide-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 15px;  /* Da un margen extra antes de la imagen */
+    }
+
+    /* CONTROLES DEL CARRUSEL */
+    .carousel-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      background: rgba(9, 9, 18, 0.8);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .nav-btn:hover {
+      background: var(--purple-accent);
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: var(--pink-neon);
+      width: 22px;
+      border-radius: 10px;
+    }
+
+    /* CARACTERÍSTICAS */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .feature-card i {
+      font-size: 1.6rem;
+      color: var(--pink-neon);
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .cta-box {
+      text-align: center;
+      margin-top: 45px;
+      padding: 30px;
+      background: rgba(138, 43, 226, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+    }
+
+    .btn-buy-now {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--gradient-btn);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 15px;
+      box-shadow: 0 4px 18px rgba(247, 37, 133, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Catálogo</a>
+
+    <h1>¿Cómo funciona <span>Game Pass Essential? (CUENTA SECUNDARIA)</span></h1>
+    <p class="subtitle">Recuerda NO SON KEYS, es una cuenta secundaria cargada con la suscripción de Game Pass Essential.</p>
+
+    <!-- CARRUSEL -->
+    <div class="carousel-container">
+      
+      <!-- PASO 1 -->
+      <div class="carousel-slide active">
+        <span class="step-badge">Paso 1</span>
+        <h2 class="slide-title">Inicia sesión con tu cuenta secundaria</h2>
+        <p class="slide-desc">Añade el perfil de la cuenta secundaria a tu consola e inicia sesión.</p>
+        <img src="imagenes/paso1-gamepass.png" alt="Paso 1" class="carousel-img" onerror="this.src='https://via.placeholder.com/700x380/131320/ffffff?text=Paso+1:+Inicia+sesión+con+tu+ cuenta+secundaria'">  
+    </div>
+
+      <!-- PASO 2 -->
+      <div class="carousel-slide">
+        <span class="step-badge">Paso 2</span>
+        <h2 class="slide-title">Verifica la suscripción</h2>
+        <p class="slide-desc">La cuenta secundaria ya tiene la suscripción de Game Pass Essential activa, de 6 meses o 1 año.</p>
+        <img src="imagenes/paso2-gamepass.png" alt="Paso 2" class="carousel-img" onerror="this.src='https://via.placeholder.com/700x380/131320/ffffff?text=Paso+2:+Descarga+tus+Juegos+Favoritos'">  
+    </div>
+
+      <!-- PASO 3 -->
+      <div class="carousel-slide">
+        <span class="step-badge">Paso 3</span>
+        <h2 class="slide-title">Listo para jugar</h2>
+        <p class="slide-desc">Deja la cuenta secundaria activa y accede a tu perfil principal para disfrutar de los juegos.</p>
+        <img src="imagenes/paso3-gamepass.png" alt="Paso 3" class="carousel-img" onerror="this.src='https://via.placeholder.com/700x380/131320/ffffff?text=Paso+3:+Cambia+a+tu+Perfil+Personal+y+¡A+Jugar!'">  
+      </div>
+
+
+      <!-- CONTROLES -->
+      <div class="carousel-controls">
+        <button class="nav-btn" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+        <div class="dots-container">
+          <span class="dot active" onclick="setSlide(0)"></span>
+          <span class="dot" onclick="setSlide(1)"></span>
+          <span class="dot" onclick="setSlide(2)"></span>
+        </div>
+        <button class="nav-btn" onclick="moveSlide(1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+    </div>
+
+    <!-- CARACTERÍSTICAS DE SEGURIDAD Y BENEFICIOS -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-user-shield"></i>
+        <h3>100% Seguro</h3>
+        <p>Tu consola no corre ningún riesgo y juegas de manera totalmente legal con tu perfil principal.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-trophy"></i>
+        <h3>Guarda tus Logros</h3>
+        <p>Tus avances, nivel y partidas se guardan directo en tu cuenta principal de Xbox.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-gamepad"></i>
+        <h3>Multijugador Online</h3>
+        <p>Accede a partidas en online y al catálogo de juegos game pass incluidos en la suscripción de la cuenta secundaria.</p>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h2>¿Listo para empezar a jugar?</h2>
+      <p style="color: var(--text-muted); margin-top: 5px;">Pide tu suscripción de 6 meses o 1 año directamente por WhatsApp.</p>
+      <a href="https://wa.me/593963365388?text=Hola,%20vi%20la%20guia%20de%20Game%20Pass%20y%20quiero%20adquirir%20mi%20suscripcion" class="btn-buy-now" target="_blank">Adquirir por WhatsApp</a>
+    </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+
+      if (index >= slides.length) currentSlide = 0;
+      else if (index < 0) currentSlide = slides.length - 1;
+      else currentSlide = index;
+
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function moveSlide(step) {
+      showSlide(currentSlide + step);
+    }
+
+    function setSlide(index) {
+      showSlide(index);
+    }
+  </script>
+
+</body>
+</html>
