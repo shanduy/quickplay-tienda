@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Cómo funciona Apple Music Método Turquía? | QuickPlay</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #090912;
+      --card-bg: rgba(19, 19, 32, 0.85);
+      --apple-red: #ff2d55;
+      --pink-neon: #f72585;
+      --gradient-apple: linear-gradient(90deg, #ff2d55 0%, #f72585 100%);
+      --text-white: #ffffff;
+      --text-muted: #9a9ab6;
+      --border-color: rgba(255, 45, 85, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height: 100vh;
+      padding: 30px 20px;
+      background-image: radial-gradient(circle at 50% 10%, rgba(255, 45, 85, 0.15) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      transition: color 0.3s;
+    }
+    .btn-back:hover { color: #fff; }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    h1 span {
+      background: var(--gradient-apple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 35px;
+      line-height: 1.5;
+    }
+
+    /* BLOQUE INFORMATIVO DE MÉTODO */
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .info-card h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-card h2 i {
+      color: var(--apple-red);
+    }
+
+    .info-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-list li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 14px;
+      color: #d1d1e0;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .info-list li::before {
+      content: "\f00c";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 0;
+      top: 2px;
+      color: var(--apple-red);
+      font-size: 0.85rem;
+    }
+
+    /* CARRUSEL DE PASOS */
+    .carousel-container {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .carousel-slide {
+      display: none;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .carousel-slide.active {
+      display: block;
+    }
+
+    .carousel-img {
+      width: auto;
+      max-width: 80%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      margin-top: 20px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: var(--gradient-apple);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .slide-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .slide-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      background: rgba(9, 9, 18, 0.8);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .nav-btn:hover {
+      background: var(--apple-red);
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: var(--apple-red);
+      width: 22px;
+      border-radius: 10px;
+    }
+
+    /* CARACTERÍSTICAS */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .feature-card i {
+      font-size: 1.6rem;
+      color: var(--apple-red);
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .cta-box {
+      text-align: center;
+      margin-top: 45px;
+      padding: 30px;
+      background: rgba(255, 45, 85, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+    }
+
+    .btn-buy-now {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--gradient-apple);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 15px;
+      box-shadow: 0 4px 18px rgba(255, 45, 85, 0.4);
+    }
+
+ /* SECCIÓN COMPARATIVA DE PRECIOS ENGANCHADORA */
+    .pricing-comparison {
+      margin-bottom: 40px;
+    }
+
+    .pricing-comparison-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .pricing-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .pricing-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 28px 22px 22px 22px;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--apple-red);
+      box-shadow: 0 15px 30px rgba(255, 45, 85, 0.25);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient-apple);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 16px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(255, 45, 85, 0.4);
+    }
+
+    .plan-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-top: 5px;
+      margin-bottom: 12px;
+    }
+
+    /* PRECIO PRINCIPAL (LO QUE PAGAS) */
+    .pay-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #00e699;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .price-main {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .price-main span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .price-save-tag {
+      display: inline-block;
+      background: rgba(0, 230, 153, 0.15);
+      color: #00e699;
+      border: 1px solid rgba(0, 230, 153, 0.3);
+      border-radius: 12px;
+      padding: 3px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .price-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 15px 0;
+    }
+
+    /* DETALLES DE FACTURACIÓN Y PRECIO OFICIAL ABAJO */
+    .price-details-box {
+      background: rgba(9, 9, 18, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 12px 14px;
+      text-align: left;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      margin-bottom: 8px;
+    }
+
+    .detail-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-label {
+      color: var(--text-muted);
+    }
+
+    .detail-value-old {
+      color: #ff5252;
+      text-decoration: line-through;
+      font-weight: 600;
+    }
+
+    .detail-value-try {
+      color: var(--apple-red);
+      font-weight: 700;
+    }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  margin-top: 35px; /* <--- Agrega este margen superior */
+}
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Catálogo</a>
+
+    <h1>¿Cómo funciona el <span>Método Apple Music</span>?</h1>
+    <p class="subtitle">Obtén Apple Music a un costo reducido aprovechando la facturación en Liras Turcas (TRY) mediante Google Play.</p>
+
+    <!-- 1. CARRUSEL DE PASOS -->
+    <div class="carousel-container">
+      
+      <!-- PASO 1 -->
+      <div class="carousel-slide active">
+        <span class="step-badge">Paso 1</span>
+        <h2 class="slide-title">Creación de la Cuenta Turca</h2>
+        <p class="slide-desc">Generamos una cuenta con la región configurada para Turquía y el método de facturación de Google Play ya listo con tu tarjeta de credito o debito.</p>
+        </div>
+
+      <!-- PASO 2 -->
+      <div class="carousel-slide">
+        <span class="step-badge">Paso 2</span>
+        <h2 class="slide-title">Activación del Plan (Individual o Familiar)</h2>
+        <p class="slide-desc">Se te suscribe a la membresía elegida. Comparacion de precios abajo.</p>
+        </div>
+
+      <!-- PASO 3 -->
+      <div class="carousel-slide">
+        <span class="step-badge">Paso 3</span>
+        <h2 class="slide-title">Inicia Sesión</h2>
+        <p class="slide-desc">Ingresa a la app de Apple Music en cualquier dispositivo (Android, iPhone, Smart TV o PC) y escucha tu música favorita en máxima calidad.</p>
+        </div>
+
+      <!-- CONTROLES -->
+      <div class="carousel-controls">
+        <button class="nav-btn" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+        <div class="dots-container">
+          <span class="dot active" onclick="setSlide(0)"></span>
+          <span class="dot" onclick="setSlide(1)"></span>
+          <span class="dot" onclick="setSlide(2)"></span>
+        </div>
+        <button class="nav-btn" onclick="moveSlide(1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+    </div>
+    
+<!-- 2. COMPARATIVA DE PRECIOS EN DÓLARES Y LIRAS TURCAS -->
+    <div class="pricing-comparison">
+      <h2 class="pricing-comparison-title"><i class="fa-solid fa-tags" style="color: var(--apple-red);"></i> Comparativa de Precios (ECUADOR)</h2>
+      
+      <div class="pricing-grid">
+    
+        
+        <!-- PLAN INDIVIDUAL -->
+        <div class="pricing-card">
+          <span class="pricing-badge">1 Perfil</span>
+          <h3 class="plan-name">Plan Individual (METODO)</h3>
+          
+          <div class="price-main">
+            $1.58 <span>/ mes (USD)</span>
+          </div>
+
+          <div class="price-divider"></div>
+
+          <div class="price-try">
+            <span class="price-try-label">Facturación oficial:</span>
+            <span class="price-try-value">$6.99 / mes (USD)</span>
+                <span class="price-try-label">Ahorras:</span>
+                <span class="price-try-value">$5.41 / mes (USD)</span>
+          </div>
+        </div>
+
+        <!-- PLAN FAMILIAR -->
+        <div class="pricing-card" style="border-color: rgba(255, 45, 85, 0.5);">
+          <span class="pricing-badge" style="background: linear-gradient(90deg, #f72585 0%, #ff2d55 100%);">Hasta 6 Perfiles</span>
+          <h3 class="plan-name">Plan Familiar (METODO)</h3>
+          
+          <div class="price-main">
+            $2.62 <span>/ mes (USD)</span>
+          </div>
+
+          <div class="price-divider"></div>
+
+          <div class="price-try">
+            <span class="price-try-label">Facturación oficial:</span>
+            <span class="price-try-value">$11.99 / mes (USD)</span>
+            <span class="price-try-label">Ahorras:</span>
+            <span class="price-try-value">$9.37 / mes (USD)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. CARACTERÍSTICAS DE SEGURIDAD Y BENEFICIOS -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-music"></i>
+        <h3>Calidad Lossless</h3>
+        <p>Disfruta de audio de alta resolución sin pérdidas y audio espacial Dolby Atmos.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-users"></i>
+        <h3>Familiares Incluidos</h3>
+        <p>Creamos las cuentas turcas secundarias sin costo adicional para el plan familiar.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-mobile-screen"></i>
+        <h3>Multiplataforma</h3>
+        <p>Compatible con Android, iOS, Windows, Consolas, Android TV y Apple TV.</p>
+      </div>
+    </div>
+
+<!-- 4. DETALLES DEL MÉTODO DE FACTURACIÓN (MOVIDO AQUÍ) -->
+    <div class="info-card" style="margin-top: 40px; margin-bottom: 40px;">
+      <h2><i class="fa-brands fa-apple"></i> Detalles del Método de Facturación</h2>
+      <p>Creación e integración de la cuenta desde cero para garantizar estabilidad total:</p>
+      
+      <ul class="info-list">
+        <li><strong>Creación desde cero:</strong> Creamos una cuenta totalmente limpia configurada con región turca para facturar mediante tu tarjeta de credito o debito en liras turcas.</li>
+        <li><strong>Facturación por Google Play:</strong> El pago y la suscripción se gestionan directamente con <strong>TU MEDIO DE PAGO</strong> y se factura mediante Google Play con el plan elejido.</li>
+        <li><strong>Planes Individuales y Familiares:</strong> Compatible tanto para uso personal como para compartir con tu familia.</li>
+        <li><strong>Cuentas Turcas Familiares Incluidas:</strong> En la contratación del <strong>Plan Familiar</strong>, te incluimos totalmente <strong>GRATIS</strong> la creación de las cuentas secundarias turcas necesarias para que todos los integrantes del grupo familiar puedan unirse sin restricciones de región. (MAXIMO 6 CUENTAS)</li>
+        <li><strong>Compatibilidad Multiplataforma:</strong> Funciona perfectamente en Android, iOS, Windows, Smart TVs, consolas Xbox y reproductores web.</li>
+      </ul>
+    </div>
+
+    <!-- 5. LLAMADA A LA ACCIÓN (BOTÓN WHATSAPP) -->
+    <div class="cta-box">
+      <h2>¿Quieres solicitar tu cuenta de Apple Music?</h2>
+      <p style="color: var(--text-muted); margin-top: 5px;">Contrata tu suscripción individual o familiar directamente por WhatsApp.</p>
+      <a href="https://wa.me/593963365388?text=Hola,%20vi%20la%20guia%20de%20Apple%20Music%20y%20quiero%20adquirir%20mi%20cuenta" class="btn-buy-now" target="_blank">Adquirir por WhatsApp</a>
+    </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+
+      if (index >= slides.length) currentSlide = 0;
+      else if (index < 0) currentSlide = slides.length - 1;
+      else currentSlide = index;
+
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function moveSlide(step) {
+      showSlide(currentSlide + step);
+    }
+
+    function setSlide(index) {
+      showSlide(index);
+    }
+  </script>
+
+</body>
+</html>
